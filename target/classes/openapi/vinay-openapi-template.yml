@@ -1,0 +1,232 @@
+openapi: 3.0.1
+info:
+  title: Template API using User an Example
+  description: This is an Template API using User as an example
+  contact:
+    email: vgajjala@gmail.com
+  license:
+    name: Visa Inc Internal
+    url: http://www.example.com/
+  version: "2.2"
+servers:
+  - url: http://localhost:8080/demo/api/v1/user
+tags:
+  - name: Vinay's Spring Boot Template Api
+    description: Everything about Vinay's Spring Boot Template
+paths:
+  /users:
+    get:
+      security:
+        - ApiKeyAuth: []
+      tags:
+        - User Query
+      summary: Get Users
+      description: Multiple User details
+      operationId: getUsers
+      parameters:
+        - name: $skip
+          in: query
+          description: The number of items to skip before starting to collect the result
+            set.
+          schema:
+            minimum: 0
+            type: integer
+        - name: $top
+          in: query
+          description: The numbers of items to return.
+          schema:
+            maximum: 200
+            minimum: 1
+            type: integer
+            default: 100
+        - name: $count
+          in: query
+          description: The numbers of items to return.
+          schema:
+            type: boolean
+        - name: $filter
+          in: query
+          description: The query results with requests which match the filter criteria.
+          schema:
+            type: string
+        - name: $orderby
+          in: query
+          description: The query results with requests which match the filter criteria.
+          schema:
+            type: string
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/User'
+        403:
+          description: Forbidden
+          content: {}
+        500:
+          description: Internal Server Error
+          content: {}
+    post:
+      security:
+        - ApiKeyAuth: []
+      tags:
+        - User Command
+      summary: Add User
+      operationId: createUser
+      requestBody:
+        description: Created User Details
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
+        required: true
+      responses:
+        201:
+          description: User Created
+          content:
+            application/json:
+              schema:
+                type: object
+                items:
+                  $ref: '#/components/schemas/User'
+        400:
+          description: Bad request
+          content: {}
+        500:
+          description: Internal Server Error
+          content: {}
+      x-codegen-request-body-name: body
+
+  /users/{id}:
+    get:
+      security:
+        - ApiKeyAuth: []
+      tags:
+        - User Query
+      summary: Get User by Id
+      description: Returns a single User
+      operationId: getUserById
+      parameters:
+        - name: id
+          in: path
+          description: The User ID.
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                $ref: '#/components/schemas/User'
+        403:
+          description: Forbidden
+          content: {}
+        404:
+          description: User not found
+          content: {}
+        500:
+          description: Internal Server Error
+          content: {}
+    put:
+      security:
+        - ApiKeyAuth: []
+      tags:
+        - User Command
+      summary: Update User
+      operationId: updateUserById
+      parameters:
+        - name: id
+          in: path
+          description: The User ID.
+          required: true
+          schema:
+            type: string
+      requestBody:
+        description: User Details
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
+        required: true
+      responses:
+        200:
+          description: User updated successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                $ref: '#/components/schemas/User'
+        400:
+          description: Bad request
+          content: {}
+        500:
+          description: Internal Server Error
+          content: {}
+      x-codegen-request-body-name: body
+    delete:
+      security:
+        - ApiKeyAuth: []
+      tags:
+        - User Command
+      summary: delete User by Id
+      operationId: deleteUserById
+      parameters:
+        - name: id
+          in: path
+          description: The User ID.
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: User Updated
+          content:
+            application/json:
+              schema:
+                type: object
+                $ref: '#/components/schemas/User'
+        400:
+          description: Bad request
+          content: {}
+        500:
+          description: Internal Server Error
+          content: {}
+      x-codegen-request-body-name: body
+components:
+  schemas:
+    User:
+      required:
+        - username
+      type: object
+      properties:
+        id:
+          type: string
+          readOnly: true
+        name:
+          type: string
+        userName:
+          type: string
+          readOnly: true
+        createdDate:
+          type: string
+          format: date-time
+          readOnly: true
+        updatedDate:
+          type: string
+          format: date-time
+          readOnly: true
+        userType:
+          type: string
+          readOnly: true
+
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      name: Authorization
+      in: header

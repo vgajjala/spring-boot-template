@@ -1,0 +1,4 @@
+com/vinay/spring/boot/template/VinaySpringBootTemplateApplication.class
+com/vinay/spring/boot/template/config/MyConfig.class
+com/vinay/spring/boot/template/config/mapper/MyObjectMapStructMapper.class
+com/vinay/spring/boot/template/config/mapper/MyObjectMapStructMapperImpl.class
