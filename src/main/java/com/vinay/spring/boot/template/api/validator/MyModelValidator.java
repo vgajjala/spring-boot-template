@@ -1,3 +1,5 @@
-public MyModelValidator implements Validator {
+import javax.validation.Validator;
+
+public class MyModelValidator implements Validator {
     
 }

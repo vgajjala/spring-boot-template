@@ -1,5 +1,5 @@
 
-package com.vinay.spring.boot.template.api
+package com.vinay.spring.boot.template.api.controller;
 
 
 import lombok.AllArgsConstructor;
